@@ -35,8 +35,17 @@ usersRoute.get('/:userId', (req, res) => {
 	});
 });
 
-usersRoute.get('/', (req, res) => {
-	
+usersRoute.get('/register', (req, res) => {
+	let user = new User(req.body)
+	user.save((err)=>{
+		if(err){
+			res.json("there was an error processing your request")
+			console.log("error saving user :",err)
+		}else{
+			res.json("account created succesfully")
+			console.log("stored user in db")
+		}
+	})
 });
 
 usersRoute.get('/', (req, res) => {

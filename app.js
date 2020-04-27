@@ -11,27 +11,15 @@ app.use(bodyParser.json())
 User = require('./models/userModel.js');
 
 var usersRoute = require('./routes/users');
+var guarantorRoute = require('./routes/guarantor');
 
 
 /*API Routes*/
-
 app.use('/api/users', usersRoute);
+app.use('/api/users', guarantorRoute);
 
-app.get('/api/', (req, res) => {
-	res.json(`api service for ${process.env.NAME}`);
-});
-
-app.post('/api/register', (req, res) => {
-	let user = new User(req.body)
-	user.save((err)=>{
-		if(err){
-			res.json("there was an error processing your request")
-			console.log("error saving user :",err)
-		}else{
-			res.json("account created succesfully")
-			console.log("stored user in db")
-		}
-	})
+app.get('/api/', (res) => {
+	res.json(`api for ${process.env.NAME}`);
 });
 
 /*

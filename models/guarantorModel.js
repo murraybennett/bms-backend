@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 
-/*
-User Schema :
-
-Think of the schema as the sql for creating a table
-Models are the same as tables in sql in a sense 
-*/
-const GuarantorSchema = mongoose.Schema({
+const guarantorSchema = mongoose.Schema({
 	name:{
 		type: String,
 		required: true
@@ -31,8 +25,56 @@ const GuarantorSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    debtor_id:{
+        type: String,
+        required:true
+    },
 	created_at:{
 		type: Date,
 		default: Date.now
 	}
 });
+
+/* Initalize the module Guarantor with the shema guarantorSchema */
+/* Same as create Table guarantor using guarantor.sql*/
+const Guarantor = module.exports = mongoose.model('Guarantor', guarantorSchema);
+
+/* Below are Methods we can create. */
+/* Methods are kinda like stored procedures */
+
+
+// Get all Guarantors of a debtor
+module.exports.getGuarantors = (id, limit,callback) => {
+	Guarantor.find({debtor_id:id},callback).limit(limit);
+}
+
+// Get Guarantor
+module.exports.getGuarantorById = (id, callback) => {
+	Guarantor.findById(id, callback);
+}
+
+// Add Guarantor
+module.exports.addGuarantor = (guarantor, callback) => {
+	Guarantor.create(guarantor, callback);
+}
+
+// Update Guarantor
+module.exports.updateGuarantor = (id, guarantor, options, callback) => {
+	var query = {_id: id};
+	var update = {
+        name: guarantor.name,
+        address: guarantor.address,
+        phone: guarantor.phone,
+        email: guarantor.email,
+        gender: guarantor.gender,
+        age: guarantor.age,
+        debtor_id: guarantor.debtor_id,
+	}
+	Guarantor.findOneAndUpdate(query, update, options, callback);
+}
+
+// Delete Guarantor
+module.exports.removeGuarantor = (id, callback) => {
+	var query = {_id: id};
+	Guarantor.remove(query, callback);
+}

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+//TODO add stored procedures /methods
+
 /*
 User Schema :
 
@@ -30,6 +32,18 @@ const debtorSchema = mongoose.Schema({
     age:{
         type: String,
         required: true
+    },
+    client_id:{ // added automatically by the server when created by a client user_type
+        type:String, 
+        required:true
+    },
+    bearer_id:{ // can only be assigned by an officer user_type
+        type:String,
+        required:false
+    },
+    status:{ // can be changed by a bearer or an officer
+        type:String,
+        default:"pending"
     },
 	created_at:{
 		type: Date,

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+//TODO add stored procedures /methods
+
 /*
 User Schema :
 
