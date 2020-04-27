@@ -35,7 +35,7 @@ usersRoute.get('/:userId', (req, res) => {
 	});
 });
 
-usersRoute.get('/register', (req, res) => {
+usersRoute.post('/register', (req, res) => {
 	let user = new User(req.body)
 	user.save((err)=>{
 		if(err){
